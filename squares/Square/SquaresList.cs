@@ -10,6 +10,7 @@ namespace squares
     {
         private List<Square> squares;
         public bool squareHasRemoved;
+        public Square RemovedSquare;
 
         public SquaresList()
         {
@@ -18,7 +19,10 @@ namespace squares
 
         public void Update(RenderWindow window)
         {
-            if(Mouse.IsButtonPressed(Mouse.Button.Left) == true)
+            squareHasRemoved = false;
+            RemovedSquare = null;
+
+            if (Mouse.IsButtonPressed(Mouse.Button.Left) == true)
             {
                 for(int i = 0; i < squares.Count; i++)
                 {
@@ -29,8 +33,22 @@ namespace squares
             for (int i = 0; i < squares.Count; i++)
             {
                 squares[i].Move();
-                squares[i].Draw(window);                
+                squares[i].Draw(window);
+
+                if (squares[i].IsActive == false)
+                {
+                    RemovedSquare = squares[i];
+                    squares.Remove(squares[i]);
+                    squareHasRemoved = true;
+                }
             }
+        }
+
+        public void Reset()
+        {
+            squareHasRemoved = false;
+            RemovedSquare = null;
+            squares.Clear();            
         }
 
         public void SpawnPlayerSquare()

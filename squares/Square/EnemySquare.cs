@@ -21,7 +21,7 @@ namespace squares
 
         protected override void OnClick()
         {
-            // to do
+            Game.IsLost = true;
         }
 
         protected override void OnReachedTarget()
